@@ -1,1 +1,16 @@
-<p>users works!</p>
+<section class="page">
+  <div class="page-header">
+    <h2>Usuarios registrados</h2>
+    <span>Total: {{ users().length }}</span>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  <div class="results">
+    @for (user of users(); track user.id) {
+      <app-user-card [user]="user" />
+    }
+  </div>
+</section>

@@ -1,1 +1,50 @@
-<p>products works!</p>
+<section class="page">
+  <div class="page-header">
+    <h2>Productos</h2>
+    @if (authService.isAdmin()) {
+      <a class="button primary" [routerLink]="['/products/new']">Nuevo producto</a>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (products().length === 0) {
+    <p>No hay productos registrados.</p>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Categoría</th>
+          @if (authService.isAdmin()) {
+            <th>Acciones</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products(); track product.id) {
+          <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description ?? '—' }}</td>
+            <td>₡{{ product.price }}</td>
+            <td>{{ product.stockQuantity }}</td>
+            <td>{{ product.category.name }}</td>
+            @if (authService.isAdmin()) {
+              <td class="actions">
+                <a class="button" [routerLink]="['/products', product.id, 'edit']">Editar</a>
+                <button type="button" class="danger" (click)="deleteProduct(product)">Eliminar</button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

@@ -8,6 +8,7 @@ import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
 import { guestGuard } from './guards/guest-guard';
 import { CategoryForm } from './category-form/category-form';
+import { ProductForm } from './product-form/product-form';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -16,8 +17,25 @@ export const routes: Routes = [
   { path: 'register', component: Register, title: 'Registro', canActivate: [guestGuard] },
 
   { path: 'products', component: Products, title: 'Productos', canActivate: [authGuard] },
+
+{
+  path: 'products/new',
+  component: ProductForm,
+  title: 'Nuevo producto',
+  canActivate: [authGuard, roleGuard],
+  data: { role: 'SUPER-ADMIN-ROLE' }
+},
+{
+  path: 'products/:id/edit',
+  component: ProductForm,
+  title: 'Editar producto',
+  canActivate: [authGuard, roleGuard],
+  data: { role: 'SUPER-ADMIN-ROLE' }
+},
+  
   { path: 'categories', component: Categories, title: 'Categorías', canActivate: [authGuard] },
-    {
+
+{
   path: 'categories/new',
   component: CategoryForm,
   title: 'Nueva categoría',
