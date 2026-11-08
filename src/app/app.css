@@ -1,23 +1,171 @@
 main {
-  padding: 1rem 2rem;
+  min-height: 100vh;
 }
+
+/* ===== Barra superior ===== */
 .brand-name {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-.brand-name h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-.menu {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  margin-top: 0.75rem;
+  padding: 0.85rem 2rem;
+  color: #fff;
+  background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary));
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
 }
+
+/* Título con un "logo" dibujado solo con CSS */
+.brand-name h1 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.brand-name h1::before {
+  content: '';
+  width: 1.6rem;
+  height: 1.6rem;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.95) 0 50%, rgb(255 255 255 / 0.55) 50% 100%);
+  box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.4);
+}
+
+/* ===== Menú ===== */
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.menu a {
+  position: relative;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgb(255 255 255 / 0.9);
+  text-decoration: none;
+  border-radius: 6px;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+/* Línea inferior animada al pasar el mouse o enfocar con teclado */
+.menu a::after {
+  content: '';
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.2rem;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.menu a:hover,
+.menu a:focus-visible {
+  color: #fff;
+  background: rgb(255 255 255 / 0.12);
+}
+
+.menu a:hover::after,
+.menu a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.menu a:focus-visible,
+.menu button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Usuario en sesión, separado del menú por una línea vertical */
 .menu .session {
-  margin-left: auto;
-  font-size: 0.9rem;
-  color: #555;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-left: 0.75rem;
+  padding: 0.3rem 0.8rem 0.3rem 0.35rem;
+  font-size: 0.85rem;
+  color: #fff;
+  background: rgb(255 255 255 / 0.12);
+  border-radius: 999px;
+  position: relative;
+}
+
+.menu .session::before {
+  content: '';
+  position: absolute;
+  left: -0.5rem;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background: rgb(255 255 255 / 0.35);
+}
+
+/* Avatar circular genérico (silueta de usuario hecha con CSS) */
+.menu .session::after {
+  content: '';
+  order: -1;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 38%, var(--color-primary-dark) 0 22%, transparent 23%),
+    radial-gradient(circle at 50% 100%, var(--color-primary-dark) 0 40%, transparent 41%),
+    #fff;
+}
+
+.menu button {
+  margin-left: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  color: #fff;
+  background: transparent;
+  border-color: rgb(255 255 255 / 0.6);
+  border-radius: 999px;
+}
+
+.menu button:hover {
+  color: var(--color-primary-dark);
+  background: #fff;
+  border-color: #fff;
+}
+
+/* ===== Pantallas pequeñas: el menú baja debajo del título ===== */
+@media (max-width: 760px) {
+  .brand-name {
+    padding: 0.75rem 1rem;
+  }
+
+  .menu {
+    width: 100%;
+  }
+
+  .menu .session {
+    margin-left: auto;
+  }
+
+  .menu .session::before {
+    display: none;
+  }
+}
+
+/* ===== Contenido de cada página ===== */
+.content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
 }
