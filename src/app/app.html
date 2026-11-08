@@ -1,6 +1,14 @@
 <main>
   <header class="brand-name">
     <h1>Laboratorio 2 · Productos y Categorías</h1>
+
+    @if (authService.isLoggedIn()) {
+      <p>
+        Sesión: <strong>{{ authService.username() }}</strong>
+        ({{ authService.roles().join(', ') }})
+        <button type="button" (click)="authService.logout()">Cerrar sesión</button>
+      </p>
+    }
   </header>
 
   <section class="content">

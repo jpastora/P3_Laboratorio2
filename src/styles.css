@@ -1,3 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-
-@import 'tailwindcss';
+.auth { max-width: 380px; display: flex; flex-direction: column; gap: .5rem; }
+.auth form { display: flex; flex-direction: column; gap: .35rem; }
+input, select, textarea { border: 1px solid #bbb; border-radius: 6px; padding: .45rem .6rem; }
+button { border: 1px solid #bbb; border-radius: 6px; padding: .45rem .9rem; cursor: pointer; }
+button.primary { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+.error { color: #b91c1c; font-size: .85rem; }
+a { color: #1d4ed8; text-decoration: underline; }
