@@ -10,7 +10,6 @@ const TOKEN_KEY = 'lab2_token';
 
 @Service()
 export class AuthService {
-
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly url = `${API_URL}/auth`;
@@ -54,13 +53,13 @@ export class AuthService {
     this.token.set(token);
   }
 
-clearSession() {
-  localStorage.removeItem(TOKEN_KEY);
-  this.token.set(null);
-}
+  clearSession() {
+    localStorage.removeItem(TOKEN_KEY);
+    this.token.set(null);
+  }
 
-logout() {
-  this.clearSession();
-  this.router.navigate(['/login']);
-}
+  logout() {
+    this.clearSession();
+    this.router.navigate(['/login']);
+  }
 }

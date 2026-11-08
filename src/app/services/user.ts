@@ -6,7 +6,6 @@ import { User } from '../interfaces/user';
 
 @Service()
 export class UserService {
-
   private readonly http = inject(HttpClient);
   private readonly url = `${API_URL}/users`;
 

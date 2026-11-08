@@ -14,7 +14,6 @@ import { ApiError } from '../interfaces/api-error';
   templateUrl: './category-form.html',
 })
 export class CategoryForm {
-
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly categoryService = inject(CategoryService);
@@ -39,15 +38,19 @@ export class CategoryForm {
       this.categoryId = Number(id);
       this.isEdit.set(true);
 
-      this.categoryService.getById(this.categoryId)
+      this.categoryService
+        .getById(this.categoryId)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: (category) => this.categoryModel.set({
-            name: category.name,
-            description: category.description ?? ''
-          }),
+          next: (category) =>
+            this.categoryModel.set({
+              name: category.name,
+              description: category.description ?? '',
+            }),
           error: (error: HttpErrorResponse) =>
-            this.errorMessage.set((error.error as ApiError)?.message ?? 'No se encontró la categoría')
+            this.errorMessage.set(
+              (error.error as ApiError)?.message ?? 'No se encontró la categoría',
+            ),
         });
     }
   }
@@ -62,13 +65,13 @@ export class CategoryForm {
         ? this.categoryService.update(this.categoryId, data)
         : this.categoryService.create(data);
 
-      request
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: () => this.router.navigate(['/categories']),
-          error: (error: HttpErrorResponse) =>
-            this.errorMessage.set((error.error as ApiError)?.message ?? 'No se pudo guardar la categoría')
-        });
+      request.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+        next: () => this.router.navigate(['/categories']),
+        error: (error: HttpErrorResponse) =>
+          this.errorMessage.set(
+            (error.error as ApiError)?.message ?? 'No se pudo guardar la categoría',
+          ),
+      });
     });
   }
 }

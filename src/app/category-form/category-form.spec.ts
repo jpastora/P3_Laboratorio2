@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CategoryForm } from './category-form';
+import { provideRouter } from '@angular/router';
 
 describe('CategoryForm', () => {
   let component: CategoryForm;
@@ -7,6 +8,7 @@ describe('CategoryForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [provideRouter([])],
       imports: [CategoryForm],
     }).compileComponents();
 

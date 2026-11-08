@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Categories } from './categories';
+import { provideRouter } from '@angular/router';
 
 describe('Categories', () => {
   let component: Categories;
@@ -7,6 +8,7 @@ describe('Categories', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [provideRouter([])],
       imports: [Categories],
     }).compileComponents();
 

@@ -14,7 +14,6 @@ import { ApiError } from '../interfaces/api-error';
   templateUrl: './login.html',
 })
 export class Login {
-
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
@@ -32,7 +31,8 @@ export class Login {
     event.preventDefault();
     submit(this.loginForm, async () => {
       this.errorMessage.set('');
-      this.authService.login(this.loginModel())
+      this.authService
+        .login(this.loginModel())
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (response) => {
@@ -40,8 +40,10 @@ export class Login {
             this.router.navigate(['/products']);
           },
           error: (error: HttpErrorResponse) => {
-            this.errorMessage.set((error.error as ApiError)?.message ?? 'No se pudo iniciar sesión');
-          }
+            this.errorMessage.set(
+              (error.error as ApiError)?.message ?? 'No se pudo iniciar sesión',
+            );
+          },
         });
     });
   }

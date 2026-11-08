@@ -6,7 +6,6 @@ import { Product, ProductRequest } from '../interfaces/product';
 
 @Service()
 export class ProductService {
-
   private readonly http = inject(HttpClient);
   private readonly url = `${API_URL}/products`;
 

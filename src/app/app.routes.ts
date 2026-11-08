@@ -18,46 +18,45 @@ export const routes: Routes = [
 
   { path: 'products', component: Products, title: 'Productos', canActivate: [authGuard] },
 
-{
-  path: 'products/new',
-  component: ProductForm,
-  title: 'Nuevo producto',
-  canActivate: [authGuard, roleGuard],
-  data: { role: 'SUPER-ADMIN-ROLE' }
-},
-{
-  path: 'products/:id/edit',
-  component: ProductForm,
-  title: 'Editar producto',
-  canActivate: [authGuard, roleGuard],
-  data: { role: 'SUPER-ADMIN-ROLE' }
-},
-  
+  {
+    path: 'products/new',
+    component: ProductForm,
+    title: 'Nuevo producto',
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'SUPER-ADMIN-ROLE' },
+  },
+  {
+    path: 'products/:id/edit',
+    component: ProductForm,
+    title: 'Editar producto',
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'SUPER-ADMIN-ROLE' },
+  },
+
   { path: 'categories', component: Categories, title: 'Categorías', canActivate: [authGuard] },
 
-{
-  path: 'categories/new',
-  component: CategoryForm,
-  title: 'Nueva categoría',
-  canActivate: [authGuard, roleGuard],
-  data: { role: 'SUPER-ADMIN-ROLE' }
-},
-{
-  path: 'categories/:id/edit',
-  component: CategoryForm,
-  title: 'Editar categoría',
-  canActivate: [authGuard, roleGuard],
-  data: { role: 'SUPER-ADMIN-ROLE' }
-},
+  {
+    path: 'categories/new',
+    component: CategoryForm,
+    title: 'Nueva categoría',
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'SUPER-ADMIN-ROLE' },
+  },
+  {
+    path: 'categories/:id/edit',
+    component: CategoryForm,
+    title: 'Editar categoría',
+    canActivate: [authGuard, roleGuard],
+    data: { role: 'SUPER-ADMIN-ROLE' },
+  },
 
   {
     path: 'users',
     component: Users,
     title: 'Usuarios',
     canActivate: [authGuard, roleGuard],
-    data: { role: 'SUPER-ADMIN-ROLE' }
+    data: { role: 'SUPER-ADMIN-ROLE' },
   },
 
-  { path: '**', redirectTo: 'products' }
-  
+  { path: '**', redirectTo: 'products' },
 ];

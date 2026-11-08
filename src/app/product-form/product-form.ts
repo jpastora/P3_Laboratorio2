@@ -24,7 +24,6 @@ interface ProductFormModel {
   templateUrl: './product-form.html',
 })
 export class ProductForm {
-
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly productService = inject(ProductService);
@@ -38,7 +37,11 @@ export class ProductForm {
   categories = signal<Category[]>([]);
 
   productModel = signal<ProductFormModel>({
-    name: '', description: '', price: 0, stockQuantity: 0, categoryId: ''
+    name: '',
+    description: '',
+    price: 0,
+    stockQuantity: 0,
+    categoryId: '',
   });
 
   productForm = form(this.productModel, (fieldPath) => {
@@ -53,11 +56,12 @@ export class ProductForm {
   });
 
   constructor() {
-    this.categoryService.getAll()
+    this.categoryService
+      .getAll()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data) => this.categories.set(data),
-        error: () => this.errorMessage.set('No se pudieron cargar las categorías')
+        error: () => this.errorMessage.set('No se pudieron cargar las categorías'),
       });
 
     const id = this.route.snapshot.params['id'];
@@ -66,18 +70,22 @@ export class ProductForm {
       this.productId = Number(id);
       this.isEdit.set(true);
 
-      this.productService.getById(this.productId)
+      this.productService
+        .getById(this.productId)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: (product) => this.productModel.set({
-            name: product.name,
-            description: product.description ?? '',
-            price: product.price,
-            stockQuantity: product.stockQuantity,
-            categoryId: String(product.category.id)
-          }),
+          next: (product) =>
+            this.productModel.set({
+              name: product.name,
+              description: product.description ?? '',
+              price: product.price,
+              stockQuantity: product.stockQuantity,
+              categoryId: String(product.category.id),
+            }),
           error: (error: HttpErrorResponse) =>
-            this.errorMessage.set((error.error as ApiError)?.message ?? 'No se encontró el producto')
+            this.errorMessage.set(
+              (error.error as ApiError)?.message ?? 'No se encontró el producto',
+            ),
         });
     }
   }
@@ -93,20 +101,20 @@ export class ProductForm {
         description: model.description,
         price: Number(model.price),
         stockQuantity: Number(model.stockQuantity),
-        categoryId: Number(model.categoryId)
+        categoryId: Number(model.categoryId),
       };
 
       const request = this.productId
         ? this.productService.update(this.productId, data)
         : this.productService.create(data);
 
-      request
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: () => this.router.navigate(['/products']),
-          error: (error: HttpErrorResponse) =>
-            this.errorMessage.set((error.error as ApiError)?.message ?? 'No se pudo guardar el producto')
-        });
+      request.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+        next: () => this.router.navigate(['/products']),
+        error: (error: HttpErrorResponse) =>
+          this.errorMessage.set(
+            (error.error as ApiError)?.message ?? 'No se pudo guardar el producto',
+          ),
+      });
     });
   }
 }

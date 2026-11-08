@@ -33,7 +33,9 @@
             @if (authService.isAdmin()) {
               <td class="actions">
                 <a class="button" [routerLink]="['/categories', category.id, 'edit']">Editar</a>
-                <button type="button" class="danger" (click)="deleteCategory(category)">Eliminar</button>
+                <button type="button" class="danger" (click)="deleteCategory(category)">
+                  Eliminar
+                </button>
               </td>
             }
           </tr>

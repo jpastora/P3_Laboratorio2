@@ -6,7 +6,6 @@ import { Category, CategoryRequest } from '../interfaces/category';
 
 @Service()
 export class CategoryService {
-
   private readonly http = inject(HttpClient);
   private readonly url = `${API_URL}/categories`;
 

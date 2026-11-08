@@ -8,6 +8,5 @@ import { User } from '../interfaces/user';
   templateUrl: './user-card.html',
 })
 export class UserCard {
-
   user = input.required<User>();
 }

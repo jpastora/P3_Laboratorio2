@@ -14,7 +14,6 @@ import { ApiError } from '../interfaces/api-error';
   templateUrl: './categories.html',
 })
 export class Categories {
-
   private readonly categoryService = inject(CategoryService);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly authService = inject(AuthService);
@@ -27,12 +26,15 @@ export class Categories {
   }
 
   loadCategories() {
-    this.categoryService.getAll()
+    this.categoryService
+      .getAll()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data) => this.categories.set(data),
         error: (error: HttpErrorResponse) =>
-          this.errorMessage.set((error.error as ApiError)?.message ?? 'No se pudieron cargar las categorías')
+          this.errorMessage.set(
+            (error.error as ApiError)?.message ?? 'No se pudieron cargar las categorías',
+          ),
       });
   }
 
@@ -41,13 +43,16 @@ export class Categories {
       return;
     }
     this.errorMessage.set('');
-    this.categoryService.delete(category.id)
+    this.categoryService
+      .delete(category.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         // Se quita de la lista sin volver a consultar al backend
-        next: () => this.categories.update(list => list.filter(c => c.id !== category.id)),
+        next: () => this.categories.update((list) => list.filter((c) => c.id !== category.id)),
         error: (error: HttpErrorResponse) =>
-          this.errorMessage.set((error.error as ApiError)?.message ?? 'No se pudo eliminar la categoría')
+          this.errorMessage.set(
+            (error.error as ApiError)?.message ?? 'No se pudo eliminar la categoría',
+          ),
       });
   }
 }

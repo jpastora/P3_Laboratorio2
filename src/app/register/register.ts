@@ -14,13 +14,16 @@ import { ApiError } from '../interfaces/api-error';
   templateUrl: './register.html',
 })
 export class Register {
-
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
   registerModel = signal<RegisterRequest>({
-    username: '', email: '', firstName: '', lastName: '', password: ''
+    username: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
   });
 
   registerForm = form(this.registerModel, (fieldPath) => {
@@ -39,7 +42,8 @@ export class Register {
     event.preventDefault();
     submit(this.registerForm, async () => {
       this.errorMessage.set('');
-      this.authService.register(this.registerModel())
+      this.authService
+        .register(this.registerModel())
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (user) => {
@@ -47,8 +51,10 @@ export class Register {
             this.router.navigate(['/login']);
           },
           error: (error: HttpErrorResponse) => {
-            this.errorMessage.set((error.error as ApiError)?.message ?? 'No se pudo registrar el usuario');
-          }
+            this.errorMessage.set(
+              (error.error as ApiError)?.message ?? 'No se pudo registrar el usuario',
+            );
+          },
         });
     });
   }

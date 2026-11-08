@@ -13,7 +13,6 @@ import { UserCard } from '../user-card/user-card';
   templateUrl: './users.html',
 })
 export class Users {
-
   private readonly userService = inject(UserService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -21,12 +20,15 @@ export class Users {
   errorMessage = signal('');
 
   constructor() {
-    this.userService.getAll()
+    this.userService
+      .getAll()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data) => this.users.set(data),
         error: (error: HttpErrorResponse) =>
-          this.errorMessage.set((error.error as ApiError)?.message ?? 'No se pudieron cargar los usuarios')
+          this.errorMessage.set(
+            (error.error as ApiError)?.message ?? 'No se pudieron cargar los usuarios',
+          ),
       });
   }
 }
