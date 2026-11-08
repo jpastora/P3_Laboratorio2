@@ -3,11 +3,19 @@
     <h1>Laboratorio 2 · Productos y Categorías</h1>
 
     @if (authService.isLoggedIn()) {
-      <p>
-        Sesión: <strong>{{ authService.username() }}</strong>
-        ({{ authService.roles().join(', ') }})
+      <nav class="menu">
+        <a [routerLink]="['/products']">Productos</a>
+        <a [routerLink]="['/categories']">Categorías</a>
+
+        @if (authService.isAdmin()) {
+          <a [routerLink]="['/users']">Usuarios</a>
+        }
+
+        <span class="session">
+          {{ authService.username() }} ({{ authService.isAdmin() ? 'Administrador' : 'Usuario' }})
+        </span>
         <button type="button" (click)="authService.logout()">Cerrar sesión</button>
-      </p>
+      </nav>
     }
   </header>
 

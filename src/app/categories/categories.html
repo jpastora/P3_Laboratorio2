@@ -1,0 +1,44 @@
+<section class="page">
+  <div class="page-header">
+    <h2>Categorías</h2>
+    @if (authService.isAdmin()) {
+      <a class="button primary" [routerLink]="['/categories/new']">Nueva categoría</a>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (categories().length === 0) {
+    <p>No hay categorías registradas.</p>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          @if (authService.isAdmin()) {
+            <th>Acciones</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (category of categories(); track category.id) {
+          <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.description ?? '—' }}</td>
+            @if (authService.isAdmin()) {
+              <td class="actions">
+                <a class="button" [routerLink]="['/categories', category.id, 'edit']">Editar</a>
+                <button type="button" class="danger" (click)="deleteCategory(category)">Eliminar</button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

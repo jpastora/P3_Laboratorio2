@@ -1,0 +1,32 @@
+<section class="auth">
+  <h2>{{ isEdit() ? 'Editar categoría' : 'Nueva categoría' }}</h2>
+
+  <form (submit)="onSubmit($event)">
+    <label for="name">Nombre</label>
+    <input id="name" type="text" [formField]="categoryForm.name" />
+    @if (categoryForm.name().invalid() && categoryForm.name().touched()) {
+      @for (error of categoryForm.name().errors(); track $index) {
+        <p class="error">{{ error.message }}</p>
+      }
+    }
+
+    <label for="description">Descripción</label>
+    <textarea id="description" rows="3" [formField]="categoryForm.description"></textarea>
+    @if (categoryForm.description().invalid() && categoryForm.description().touched()) {
+      @for (error of categoryForm.description().errors(); track $index) {
+        <p class="error">{{ error.message }}</p>
+      }
+    }
+
+    @if (errorMessage()) {
+      <p class="error">{{ errorMessage() }}</p>
+    }
+
+    <div class="actions">
+      <button type="submit" class="primary" [disabled]="categoryForm().invalid()">
+        {{ isEdit() ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <a class="button" [routerLink]="['/categories']">Cancelar</a>
+    </div>
+  </form>
+</section>

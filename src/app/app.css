@@ -1,3 +1,5 @@
 main { padding: 1rem 2rem; }
 .brand-name { border-bottom: 1px solid #ddd; padding-bottom: .75rem; margin-bottom: 1.5rem; }
 .brand-name h1 { font-size: 1.5rem; font-weight: 600; }
+.menu { display: flex; align-items: center; gap: 1rem; margin-top: .75rem; }
+.menu .session { margin-left: auto; font-size: .9rem; color: #555; }
